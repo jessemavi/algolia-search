@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "algoliasearch": "^3.30.0",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3"
   }
 }
