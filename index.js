@@ -32,7 +32,16 @@ app.post('/api/1/apps', (req, res) => {
 
 // Delete an app from the Algolia index
 app.delete('/api/1/apps/:id', (req, res) => {
+  const delete_app = async () => {
+    try {
+      const deleted_app = await index.deleteObject(req.params.id);
+      res.send(deleted_app);
+    } catch(err) {
+      res.send(err);
+    }
+  };
 
+  delete_app();
 });
 
 app.listen(4000, () => {
