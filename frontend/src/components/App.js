@@ -1,5 +1,6 @@
-import { version, Component } from 'inferno';
+import { Component } from 'inferno';
 import '../registerServiceWorker';
+import SearchBox from './SearchBox';
 import algoliasearch from 'algoliasearch';
 import algoliasearchHelper from 'algoliasearch-helper';
 import keys from '../api_keys';
@@ -11,10 +12,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      hits: []
+      hits: [],
+      categories: []
     };
+  }
 
+  componentDidMount = () => {
     helper.on('result', async (content) => {
+      console.log(content);
       await this.setState({
         hits: content.hits
       });
@@ -24,10 +29,24 @@ class App extends Component {
     helper.search();
   }
 
+  algoliaSearch = (query) => {
+    console.log('query', query);
+
+    helper.setQuery(query).search();
+
+    helper.on('result', async (content) => {
+      await this.setState({
+        hits: content.hits
+      });
+      console.log(this.state);
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <h2>Algolia App</h2>
+        <SearchBox algoliaSearch={this.algoliaSearch} />
       </div>
     );
   }
