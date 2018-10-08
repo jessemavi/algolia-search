@@ -5,8 +5,7 @@ const Categories = (props) => {
       {props.categories.map((category) => {
         return (
           <div>
-            <p onClick={() => props.onCategorySelection(category[0])}>{category[0]}</p>
-            <p>{category[1]}</p>
+            <span onClick={() => props.onCategorySelection(category[0])}>{category[0]} {category[1]}</span>
           </div>
         );
       })}

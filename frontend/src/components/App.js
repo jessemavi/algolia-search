@@ -11,9 +11,7 @@ const client = algoliasearch('0Z8CJDE7SH', keys.algolia_search);
 const index = client.initIndex('appstore_search');
 
 index.setSettings({
-  attributesForFaceting: [
-    'category'
-  ]
+  attributesForFaceting: ['category']
 });
 
 const helper = algoliasearchHelper(client, 'appstore_search', {
@@ -26,7 +24,8 @@ class App extends Component {
     super();
     this.state = {
       hits: [],
-      categories: []
+      categories: [],
+      sortOrder: 'Descending'
     };
   }
 
@@ -47,6 +46,12 @@ class App extends Component {
         hits: content.hits,
         categories: categories
       });
+
+      if(this.state.sortOrder === 'Descending') {
+        await this.onSortDescending();
+      } else if(this.state.sortOrder === 'Ascending') {
+        await this.onSortAscending();
+      }
       console.log(this.state);
     });
 
@@ -54,27 +59,65 @@ class App extends Component {
   }
 
   algoliaSearch = (query) => {
-    console.log('query', query);
+    // console.log('query', query);
 
     helper.setQuery(query).search();
 
     helper.on('result', async (content) => {
-      console.log('content in algoliaSearch', content);
+      // console.log('content in algoliaSearch', content);
       await this.setState({
         hits: content.hits
       });
-      console.log(this.state);
+      
+      if(this.state.sortOrder === 'Descending') {
+        await this.onSortDescending();
+      } else if(this.state.sortOrder === 'Ascending') {
+        await this.onSortAscending();
+      }
+      // console.log(this.state);
     });
   }
 
   onCategorySelection = (category) => {
-    console.log('category selected', category);
+    // console.log('category selected', category);
 
     helper.toggleFacetRefinement('category', category).search();
 
     helper.on('result', (content) => {
       console.log('content in onCategorySelection', content);
     });
+  };
+
+  onSortDescending = () => {
+    // console.log('sort descending');
+    let { hits } = this.state;
+
+    // console.log('hits before sorting', hits);
+
+    hits = hits.sort((a, b) => {
+      return b.rank - a.rank;
+    });
+
+    // console.log('hits after sorting', hits);
+
+    this.setState({
+      hits: hits,
+      sortOrder: 'Descending'
+    })
+  };
+
+  onSortAscending = () => {
+    console.log('sort ascending');
+    let { hits } = this.state;
+
+    hits = hits.sort((a, b) => {
+      return a.rank - b.rank;
+    });
+
+    this.setState({
+      hits: hits,
+      sortOrder: 'Ascending'
+    })
   };
 
   render() {
@@ -86,7 +129,12 @@ class App extends Component {
           categories={this.state.categories} 
           onCategorySelection={this.onCategorySelection}
         />
-        <SearchResults hits={this.state.hits} />
+        <SearchResults 
+          hits={this.state.hits} 
+          onSortDescending={this.onSortDescending}
+          onSortAscending={this.onSortAscending}
+          sortOrder={this.state.sortOrder}
+        />
       </div>
     );
   }
