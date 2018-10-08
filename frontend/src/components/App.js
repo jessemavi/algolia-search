@@ -1,12 +1,24 @@
 import { Component } from 'inferno';
 import '../registerServiceWorker';
 import SearchBox from './SearchBox';
+import Categories from './Categories';
 import algoliasearch from 'algoliasearch';
 import algoliasearchHelper from 'algoliasearch-helper';
 import keys from '../api_keys';
 
 const client = algoliasearch('0Z8CJDE7SH', keys.algolia_search);
-const helper = algoliasearchHelper(client, 'appstore_search');
+const index = client.initIndex('appstore_search');
+
+index.setSettings({
+  attributesForFaceting: [
+    'category'
+  ]
+});
+
+const helper = algoliasearchHelper(client, 'appstore_search', {
+  facets: ['category']
+});
+
 
 class App extends Component {
   constructor() {
@@ -20,10 +32,18 @@ class App extends Component {
   componentDidMount = () => {
     helper.on('result', async (content) => {
       console.log(content);
+
+      const categories = [];
+      const searchResultCategories = content.facets[0].data;
+      for(let key in searchResultCategories) {
+        categories.push([key, searchResultCategories[key]]);
+      }
+
       await this.setState({
-        hits: content.hits
+        hits: content.hits,
+        categories: categories
       });
-      console.log(this.state);
+      // console.log(this.state);
     });
 
     helper.search();
@@ -38,7 +58,7 @@ class App extends Component {
       await this.setState({
         hits: content.hits
       });
-      console.log(this.state);
+      // console.log(this.state);
     });
   }
 
@@ -47,6 +67,7 @@ class App extends Component {
       <div className="App">
         <h2>Algolia App</h2>
         <SearchBox algoliaSearch={this.algoliaSearch} />
+        <Categories categories={this.state.categories} />
       </div>
     );
   }
