@@ -2,6 +2,7 @@ import { Component } from 'inferno';
 import '../registerServiceWorker';
 import SearchBox from './SearchBox';
 import Categories from './Categories';
+import SearchResults from './SearchResults';
 import algoliasearch from 'algoliasearch';
 import algoliasearchHelper from 'algoliasearch-helper';
 import keys from '../api_keys';
@@ -68,6 +69,7 @@ class App extends Component {
         <h2>Algolia App</h2>
         <SearchBox algoliaSearch={this.algoliaSearch} />
         <Categories categories={this.state.categories} />
+        <SearchResults hits={this.state.hits} />
       </div>
     );
   }
