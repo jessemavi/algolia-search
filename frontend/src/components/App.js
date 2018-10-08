@@ -31,8 +31,6 @@ class App extends Component {
 
   componentDidMount = () => {
     helper.on('result', async (content) => {
-      console.log('content', content);
-
       const categories = [];
 
       if(content.facets[0] !== undefined) {
@@ -46,59 +44,37 @@ class App extends Component {
         hits: content.hits,
         categories: categories
       });
-
-      if(this.state.sortOrder === 'Descending') {
-        await this.onSortDescending();
-      } else if(this.state.sortOrder === 'Ascending') {
-        await this.onSortAscending();
-      }
-      console.log(this.state);
     });
 
     helper.search();
   }
 
   algoliaSearch = (query) => {
-    // console.log('query', query);
-
     helper.setQuery(query).search();
 
     helper.on('result', async (content) => {
-      // console.log('content in algoliaSearch', content);
       await this.setState({
         hits: content.hits
       });
-      
+
       if(this.state.sortOrder === 'Descending') {
         await this.onSortDescending();
       } else if(this.state.sortOrder === 'Ascending') {
         await this.onSortAscending();
       }
-      // console.log(this.state);
     });
   }
 
   onCategorySelection = (category) => {
-    // console.log('category selected', category);
-
     helper.toggleFacetRefinement('category', category).search();
-
-    helper.on('result', (content) => {
-      console.log('content in onCategorySelection', content);
-    });
   };
 
   onSortDescending = () => {
-    // console.log('sort descending');
     let { hits } = this.state;
-
-    // console.log('hits before sorting', hits);
 
     hits = hits.sort((a, b) => {
       return b.rank - a.rank;
     });
-
-    // console.log('hits after sorting', hits);
 
     this.setState({
       hits: hits,
@@ -107,7 +83,6 @@ class App extends Component {
   };
 
   onSortAscending = () => {
-    console.log('sort ascending');
     let { hits } = this.state;
 
     hits = hits.sort((a, b) => {
@@ -131,9 +106,9 @@ class App extends Component {
         />
         <SearchResults 
           hits={this.state.hits} 
+          sortOrder={this.state.sortOrder}
           onSortDescending={this.onSortDescending}
           onSortAscending={this.onSortAscending}
-          sortOrder={this.state.sortOrder}
         />
       </div>
     );

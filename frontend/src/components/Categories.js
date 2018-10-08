@@ -1,7 +1,8 @@
+import './Categories.css';
+
 const Categories = (props) => {
-  // console.log(props);
   return (
-    <div>
+    <div id="categories-list">
       {props.categories.map((category) => {
         return (
           <div>

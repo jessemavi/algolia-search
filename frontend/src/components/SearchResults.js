@@ -1,3 +1,5 @@
+import './SearchResults.css';
+
 const SearchResults = (props) => {
   const handleChange = (event) => {
     const selectedOrder = event.target.value
@@ -10,7 +12,7 @@ const SearchResults = (props) => {
   }
 
   return (
-    <div>
+    <div id="search-results">
       <select value={props.sortOrder} onChange={handleChange.bind(this)}>
         <option value="Descending">Descending</option>
         <option value="Ascending">Ascending</option>
