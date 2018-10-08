@@ -32,19 +32,22 @@ class App extends Component {
 
   componentDidMount = () => {
     helper.on('result', async (content) => {
-      console.log(content);
+      console.log('content', content);
 
       const categories = [];
-      const searchResultCategories = content.facets[0].data;
-      for(let key in searchResultCategories) {
-        categories.push([key, searchResultCategories[key]]);
+
+      if(content.facets[0] !== undefined) {
+        const searchResultCategories = content.facets[0].data;
+        for(let key in searchResultCategories) {
+          categories.push([key, searchResultCategories[key]]);
+        }
       }
 
       await this.setState({
         hits: content.hits,
         categories: categories
       });
-      // console.log(this.state);
+      console.log(this.state);
     });
 
     helper.search();
@@ -56,19 +59,33 @@ class App extends Component {
     helper.setQuery(query).search();
 
     helper.on('result', async (content) => {
+      console.log('content in algoliaSearch', content);
       await this.setState({
         hits: content.hits
       });
-      // console.log(this.state);
+      console.log(this.state);
     });
   }
+
+  onCategorySelection = (category) => {
+    console.log('category selected', category);
+
+    helper.toggleFacetRefinement('category', category).search();
+
+    helper.on('result', (content) => {
+      console.log('content in onCategorySelection', content);
+    });
+  };
 
   render() {
     return (
       <div className="App">
         <h2>Algolia App</h2>
         <SearchBox algoliaSearch={this.algoliaSearch} />
-        <Categories categories={this.state.categories} />
+        <Categories 
+          categories={this.state.categories} 
+          onCategorySelection={this.onCategorySelection}
+        />
         <SearchResults hits={this.state.hits} />
       </div>
     );

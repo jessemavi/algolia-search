@@ -19,7 +19,6 @@ class SearchBox extends Component {
   render() {
     return (
       <div>
-        <h3>Search Box</h3>
         <input
           value={this.state.searchQuery}
           onInput={this.onSearchInputChange}

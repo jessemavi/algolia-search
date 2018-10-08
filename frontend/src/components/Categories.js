@@ -2,9 +2,12 @@ const Categories = (props) => {
   // console.log(props);
   return (
     <div>
-      {props.categories.map((category, index) => {
+      {props.categories.map((category) => {
         return (
-          <p id={index}>{category[0]} {category[1]}</p>
+          <div>
+            <p onClick={() => props.onCategorySelection(category[0])}>{category[0]}</p>
+            <p>{category[1]}</p>
+          </div>
         );
       })}
     </div>
