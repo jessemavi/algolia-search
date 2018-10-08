@@ -22,3 +22,6 @@ yarn-error.log*
 
 *.orig
 package-lock.json
+
+# api keys
+/src/api_keys.js
