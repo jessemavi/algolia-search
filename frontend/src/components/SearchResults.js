@@ -2,7 +2,7 @@ import './SearchResults.css';
 
 const SearchResults = (props) => {
   const handleChange = (event) => {
-    const selectedOrder = event.target.value
+    const selectedOrder = event.target.value;
 
     if(selectedOrder === 'Descending') {
       props.onSortDescending();

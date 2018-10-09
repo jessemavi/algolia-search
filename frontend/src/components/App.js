@@ -98,7 +98,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h2>Algolia App</h2>
+        <h2>Appstore Search</h2>
         <SearchBox algoliaSearch={this.algoliaSearch} />
         <Categories 
           categories={this.state.categories} 
