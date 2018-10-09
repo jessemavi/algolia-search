@@ -5,9 +5,8 @@ import Categories from './Categories';
 import SearchResults from './SearchResults';
 import algoliasearch from 'algoliasearch';
 import algoliasearchHelper from 'algoliasearch-helper';
-import keys from '../api_keys';
 
-const client = algoliasearch('0Z8CJDE7SH', keys.algolia_search);
+const client = algoliasearch('0Z8CJDE7SH', '8ca2fa4117eb72a291f437babb8e5a11');
 const index = client.initIndex('appstore_search');
 
 index.setSettings({
