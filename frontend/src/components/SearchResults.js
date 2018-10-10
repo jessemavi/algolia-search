@@ -27,7 +27,7 @@ const SearchResults = (props) => {
         return (
           <div class="search-hit">
             <p id="app-name">{hit.name}</p>
-            <p>{hit.category}</p>
+            <p>Category: {hit.category}</p>
             <p>Rank: {hit.rank}</p>
             <button onClick={() => window.location.href=`${hit.link}`}>View on Appstore</button>
           </div>

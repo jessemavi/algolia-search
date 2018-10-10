@@ -1,16 +1,18 @@
 #search-results {
-  width: 50%;
+  min-width: 50%;
   float: left;
 }
 
 .search-hit {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid lightgray;
   font-size: 20px;
+  padding-bottom: 8px;
 }
 
 #sort-selection {
   float: right;
   font-size: 15px;
+  margin: 5px;
 }
 
 #app-name {

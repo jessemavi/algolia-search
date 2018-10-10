@@ -1,13 +1,13 @@
 #categories-list {
-  max-width: 150px;
+  width: 150px;
   float: left;
-  padding: 0 1em;
+  padding: 0 15px;
+  margin-right: 35px;
+  margin-bottom: 30px;
 }
 
-#category {
-  background:none;
-  border:none;
-  font-size: 14px;
+#category-header {
+  border-bottom: 1px solid grey;
 }
 
 #category:hover {

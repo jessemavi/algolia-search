@@ -11,7 +11,7 @@ const index = client.initIndex('appstore_search');
 
 index.setSettings({
   attributesForFaceting: ['category'],
-  hitsPerPage: 80
+  hitsPerPage: 15
 });
 
 const helper = algoliasearchHelper(client, 'appstore_search', {
@@ -30,6 +30,8 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    helper.search();
+
     helper.on('result', async (content) => {
       console.log('content', content);
 
@@ -47,29 +49,28 @@ class App extends Component {
         categories: categories
       });
     });
-
-    helper.search();
   }
 
   algoliaSearch = (query) => {
     helper.setQuery(query).search();
 
     helper.on('result', async (content) => {
+      console.log('content from algoliaSearch', content);
       await this.setState({
         hits: content.hits
       });
 
       if(this.state.sortOrder === 'Descending') {
-        await this.onSortDescending();
+        this.onSortDescending();
       } else if(this.state.sortOrder === 'Ascending') {
-        await this.onSortAscending();
+        this.onSortAscending();
       }
     });
   }
 
   onCategorySelection = (category) => {
     helper.toggleFacetRefinement('category', category).search();
-  };
+  }
 
   onSortDescending = () => {
     let { hits } = this.state;
@@ -82,7 +83,7 @@ class App extends Component {
       hits: hits,
       sortOrder: 'Descending'
     })
-  };
+  }
 
   onSortAscending = () => {
     let { hits } = this.state;
@@ -95,7 +96,7 @@ class App extends Component {
       hits: hits,
       sortOrder: 'Ascending'
     })
-  };
+  }
 
   render() {
     return (
