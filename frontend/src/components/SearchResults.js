@@ -13,17 +13,23 @@ const SearchResults = (props) => {
 
   return (
     <div id="search-results">
-      <select value={props.sortOrder} onChange={handleChange.bind(this)}>
-        <option value="Descending">Descending</option>
-        <option value="Ascending">Ascending</option>
-      </select>
+
+      {props.hits.length > 0 ?
+        <select id="sort-selection" value={props.sortOrder} onChange={handleChange.bind(this)}>
+          <option value="Descending">Descending</option>
+          <option value="Ascending">Ascending</option>
+        </select>
+      :
+        null
+      }
 
       {props.hits.map((hit) => {
         return (
-          <div>
-            <p>{hit.name}</p>
+          <div class="search-hit">
+            <p id="app-name">{hit.name}</p>
             <p>{hit.category}</p>
-            <p>{hit.rank}</p>
+            <p>Rank: {hit.rank}</p>
+            <button onClick={() => window.location.href=`${hit.link}`}>View on Appstore</button>
           </div>
         );
       })}

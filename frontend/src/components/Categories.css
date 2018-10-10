@@ -1,8 +1,15 @@
 #categories-list {
   max-width: 150px;
-  width: 100%;
   float: left;
   padding: 0 1em;
-  margin: 0;
-  list-style: none;
+}
+
+#category {
+  background:none;
+  border:none;
+  font-size: 14px;
+}
+
+#category:hover {
+  font-weight:bold;
 }

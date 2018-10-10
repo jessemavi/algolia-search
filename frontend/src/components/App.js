@@ -10,7 +10,8 @@ const client = algoliasearch('0Z8CJDE7SH', '8ca2fa4117eb72a291f437babb8e5a11');
 const index = client.initIndex('appstore_search');
 
 index.setSettings({
-  attributesForFaceting: ['category']
+  attributesForFaceting: ['category'],
+  hitsPerPage: 80
 });
 
 const helper = algoliasearchHelper(client, 'appstore_search', {
@@ -30,6 +31,8 @@ class App extends Component {
 
   componentDidMount = () => {
     helper.on('result', async (content) => {
+      console.log('content', content);
+
       const categories = [];
 
       if(content.facets[0] !== undefined) {
@@ -115,11 +118,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-// components:
-  // main app: keeps track of state and makes requests to algolia, passes results to apps list(functional stateless) and app categories to categories
-    // search box: passes search input to app
-    // list of apps found (hits) with a way to sort the results by rank ASC or rank DESC (default)
-    // categories filtering (faceting)

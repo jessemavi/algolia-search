@@ -1,4 +1,5 @@
 import { Component } from 'inferno';
+import './SearchBox.css';
 
 class SearchBox extends Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class SearchBox extends Component {
     return (
       <div>
         <input
+          id="search-box"
+          placeholder="search for an app"
           value={this.state.searchQuery}
           onInput={this.onSearchInputChange}
         />

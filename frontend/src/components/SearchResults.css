@@ -1,8 +1,18 @@
 #search-results {
-  max-width: 150px;
-  width: 100%;
+  width: 50%;
   float: left;
-  padding: 0 1em;
-  margin: 0;
-  list-style: none;
+}
+
+.search-hit {
+  border-bottom: 1px solid grey;
+  font-size: 20px;
+}
+
+#sort-selection {
+  float: right;
+  font-size: 15px;
+}
+
+#app-name {
+  font-weight: bold;
 }
