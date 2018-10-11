@@ -1,20 +1,28 @@
 #search-results {
-  min-width: 50%;
+  width: 50%;
   float: left;
+  margin-left: 5px;
 }
 
 .search-hit {
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid grey;
   font-size: 20px;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 
 #sort-selection {
   float: right;
   font-size: 15px;
-  margin: 5px;
 }
 
 #app-name {
   font-weight: bold;
+}
+
+#app-category {
+  color: darkslategray;
+}
+
+#app-rank {
+  color: darkslategray;
 }
